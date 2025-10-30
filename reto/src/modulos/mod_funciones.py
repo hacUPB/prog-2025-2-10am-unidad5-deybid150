@@ -122,10 +122,8 @@ def Calcular_Estadísticas():
         if indice < len(fila):
             celda = fila[indice].strip()
             if celda != "":
-                try:
-                    valores.append(float(celda))
-                except ValueError:
-                    continue
+                valores.append(float(celda))
+
     if valores:
         cantidad = len(valores)
         promedio = sum(valores) / cantidad
