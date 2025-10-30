@@ -1,6 +1,6 @@
 import os
 import csv
-import statistics
+import math
 import matplotlib.pyplot as plt
 
 def ls():
@@ -22,7 +22,7 @@ def ls():
     if not archivos_validos:
         print("No se encontraron archivos en la ruta indicada.")
     else:
-        for idx, nombre in enumerate(archivos_validos, start=1):
+        for idx, nombre in enumerate(archivos_validos, start=1): #IA uso del enumerate
             print(f"{idx}. {nombre}")
 
 def contar():
@@ -128,9 +128,21 @@ def Calcular_Estadísticas():
                     continue
     if valores:
         cantidad = len(valores)
-        promedio = statistics.mean(valores)
-        mediana = statistics.median(valores)
-        desviacion = statistics.stdev(valores) if cantidad > 1 else 0
+        promedio = sum(valores) / cantidad
+        # mediana
+        ordenados = sorted(valores)
+        if cantidad % 2 == 1:
+            mediana = ordenados[cantidad // 2]
+        else:
+            m1 = ordenados[cantidad // 2 - 1]
+            m2 = ordenados[cantidad // 2]
+            mediana = (m1 + m2) / 2
+        # desviación estándar (muestra: divisor n-1, igual que statistics.stdev)
+        if cantidad > 1:
+            varianza = sum((x - promedio) ** 2 for x in valores) / (cantidad - 1)
+            desviacion = math.sqrt(varianza)
+        else:
+            desviacion = 0
         print(f"\nResultados estadísticos:\nNumero de datos: {cantidad}\nPromedio: {promedio}\nMediana: {mediana}\nDesviación estándar: {desviacion}\nValor máximo: {max(valores)}\nValor mínimo: {min(valores)}")
     else:
         print("No se encontraron datos numéricos ;(")
