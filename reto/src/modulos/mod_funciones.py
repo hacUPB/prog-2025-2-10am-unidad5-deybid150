@@ -54,35 +54,32 @@ def reemplazar():
 
 def histograma():
     R = input("Ingresa la ruta del archivo .txt: ").strip()
+    if not os.path.exists(R) or not os.path.isfile(R):
+        print("El archivo no existe.")
+        return
 
     with open(R, "r", encoding="utf-8") as archivo:
-        contenido = archivo.read()
+        contenido = archivo.read().lower()
 
-        contenido = contenido.lower()
-
-        a = 0
-        e = 0
-        i = 0
-        o = 0
-        u = 0
-        pos = 0
+    a = e = ii = o = u = 0  #IA ii para no chocar con índice i si se usa en otro contexto
+    pos = 0
 
     while pos < len(contenido):
         c = contenido[pos]
         if c == "a":
             a += 1
-        if c == "e":
+        elif c == "e":
             e += 1
-        if c == "i":
-            i += 1
-        if c == "o":
+        elif c == "i":
+            ii += 1
+        elif c == "o":
             o += 1
-        if c == "u":
+        elif c == "u":
             u += 1
         pos += 1
 
-        vocales = ["a", "e", "i", "o", "u"]
-        valores = [a, e, i, o, u]
+    vocales = ["a", "e", "i", "o", "u"]
+    valores = [a, e, ii, o, u]
 
     plt.bar(vocales, valores)
     plt.title("Histograma de ocurrencia de vocales")
@@ -90,7 +87,7 @@ def histograma():
     plt.ylabel("Cantidad")
     plt.show()
 
-    print("Conteo de vocales:", "a =", a, "e =", e, "i =", i, "o =", o, "u =", u)
+    print("Conteo de vocales:", "a =", a, "e =", e, "i =", ii, "o =", o, "u =", u)
 
 def M15():
     R = input("Ingresa la ruta del archivo .csv: ").strip()
